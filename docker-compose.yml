@@ -1,5 +1,8 @@
 version: '3.8'
 
+networks:
+    api_network:
+
 services:
     api_nginx:
         container_name: api_nginx
@@ -8,9 +11,11 @@ services:
             - ./_docker/nginx/conf.d/:/etc/nginx/conf.d/
             - ./:/var/www/
         ports:
-            - 8080:80
+            - '8080:80'
         depends_on:
             - api_app
+        networks:
+            - api_network
 
     api_app:
         container_name: api_app
@@ -18,28 +23,35 @@ services:
             context: .
             dockerfile: _docker/app/Dockerfile
         volumes:
-            - ._doker/conf.d/:/etc/nginx/conf.d/
+            - ._docker/conf.d/:/etc/nginx/conf.d/
             - ./:/var/www/
         depends_on:
             - api_db
+        networks:
+            - api_network
 
     api_db:
-        container_name: api_database
-        image: mysql:9.0
+        container_name: api_db
+        image: mysql:9.0.1
         restart: always
         volumes:
             - ./tmp/db/:/var/lib/mysql
         environment:
-            MYSQL_DATABASE: learning_math
-            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: "{DB_DATABASE}"
+            MYSQL_USER: "${DB_USERNAME}"
+            MYSQL_PASSWORD: "${DB_PASSWORD}"
         ports:
-            - 8101:3306
-        command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+            - '8101:3306'
+        command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --init-connect='SET NAMES UTF8;' --innodb-flush-log-at-trx-commit=0
+        networks:
+            - api_network
 
     adminer:
         image: adminer
         restart: always
         environment:
-            ADMINER_DEFAULT_SERVER: api_database
+            ADMINER_DEFAULT_SERVER: api_db
         ports:
-            - "8086:8080"
+            - '8086:8080'
+        networks:
+            - api_network

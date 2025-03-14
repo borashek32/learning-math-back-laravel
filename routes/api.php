@@ -1,11 +1,8 @@
 <?php
 
-use App\Http\Controllers\v1\Company\CompanyController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'v1'], function () {
-//    Route::group(['company', 'middleware' => 'auth:sanctum'], function () {
-    Route::group(['prefix' => 'companies'], function () {
-        Route::get('/', [CompanyController::class, 'getCompanyCoordinates']);
-    });
+    Route::post('/login', [\App\Http\Controllers\Api\v1\Auth\AuthController::class, 'login']);
+    Route::post('/register', [\App\Http\Controllers\Api\v1\Auth\AuthController::class, 'register']);
 });

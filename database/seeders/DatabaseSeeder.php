@@ -14,10 +14,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(IndustrySeeder::class);
-
         User::factory()->count(1)->create();
-        Company::factory()->count(10)->create();
-        Address::factory()->count(10)->create();
     }
 }
