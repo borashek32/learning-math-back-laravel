@@ -9,7 +9,7 @@ class RegisterControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_register_via_email()
+    public function test_register_via_email_success()
     {
         $this->postJson('api/v1/register', [
             'email' => 'john@doe.com',
@@ -23,5 +23,30 @@ class RegisterControllerTest extends TestCase
                     'token_type',
                 ],
             ]);
+    }
+
+    public function test_register_via_email_failed()
+    {
+        $response = $this->postJson('api/v1/register', [
+            'email' => 'johndoe.com',
+            'password' => 'se',
+            'password_confirmation' => 'seCret99@',
+        ]);
+
+        $response->assertStatus(422);
+        $response->assertJsonStructure([
+            'status',
+            'message',
+            'errors' => ['email', 'password'],
+        ]);
+
+        $json = $response->json();
+
+        $this->assertArrayHasKey('message', $json);
+        $this->assertArrayHasKey('errors', $json);
+        $this->assertArrayHasKey('email', $json['errors']);
+        $this->assertArrayHasKey('password', $json['errors']);
+        $this->assertSame(2, count($json['errors']));
+        $this->assertSame(2, count($json['errors']['password']));
     }
 }
