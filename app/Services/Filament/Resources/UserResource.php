@@ -3,15 +3,12 @@
 namespace App\Services\Filament\Resources;
 
 use App\Services\Filament\Resources\UserResource\Pages;
-use App\Services\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UserResource extends Resource
 {
@@ -30,23 +27,6 @@ class UserResource extends Resource
                     ->email()
                     ->required()
                     ->maxLength(255),
-                Forms\Components\DateTimePicker::make('email_verified_at'),
-                Forms\Components\TextInput::make('password')
-                    ->password()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Toggle::make('isVerified')
-                    ->required(),
-                Forms\Components\TextInput::make('role')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('verificationLink')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('createNewPasswordLink')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('avatarPath')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('avatarName')
-                    ->maxLength(255),
             ]);
     }
 
@@ -57,29 +37,6 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('email_verified_at')
-                    ->dateTime()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\IconColumn::make('isVerified')
-                    ->boolean(),
-                Tables\Columns\TextColumn::make('role')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('verificationLink')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('createNewPasswordLink')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('avatarPath')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('avatarName')
                     ->searchable(),
             ])
             ->filters([
