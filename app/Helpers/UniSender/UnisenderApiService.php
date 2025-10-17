@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Helpers\Unisender;
+namespace App\Helpers\UniSender;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
+use GuzzleHttp\Exception\GuzzleException;
 
-class UnisenderApiService
+class UniSenderApiService
 {
     private static $instance;
     protected $client;
@@ -38,11 +39,7 @@ class UnisenderApiService
         return self::$instance;
     }
 
-    /**
-     * @param array $data Array of users to send emails to
-     * @return array Response from API
-     */
-    public function sendEmail($data)
+    public function sendEmail($data): array
     {
         $responses = [];
 
@@ -71,11 +68,15 @@ class UnisenderApiService
                     'headers' => $this->headers,
                     'json' => $requestBody,
                 ]);
+
                 $responses[] = json_decode($response->getBody(), true);
+
             } catch (BadResponseException $e) {
                 $response = $e->getResponse();
                 $body = $response->getBody()->getContents();
                 $responses[] = json_decode($body, true);
+
+            } catch (GuzzleException $e) {
             }
         }
 

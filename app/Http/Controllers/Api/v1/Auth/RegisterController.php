@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1\Auth;
 
+use App\Events\Auth\NewUserRegisteredEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Auth\RegisterRequest;
 use App\Http\Resources\v1\Auth\RegisterResource;
@@ -10,18 +11,15 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response as StatusCode;
-use Throwable;
 
 class RegisterController extends Controller
 {
-    public function __construct(
-
-    ) {}
+    public function __construct() {}
 
     public function register(RegisterRequest $request): JsonResponse
     {
         if (!$request->exists(['email', 'password', 'password_confirmation'])) {
-            response()->json([
+            return response()->json([
                 'data' => [
                     'message' => 'Something went wrong',
                 ],
@@ -30,6 +28,8 @@ class RegisterController extends Controller
 
         $response = $this->viaEmail($request->email, $request->password);
 
+        event(new NewUserRegisteredEvent($response['user']['email']));
+
         $cookie = cookie(
             name: 'access_token',
             value: $response['access_token'],
@@ -37,7 +37,7 @@ class RegisterController extends Controller
             domain: '.' . str_replace(['https://', 'http://'], '', config('app.url'))
         );
 
-        return (new RegisterResource($response))
+        return new RegisterResource($response)
             ->response()
             ->withCookie($cookie)
             ->setStatusCode(StatusCode::HTTP_CREATED);
