@@ -25,8 +25,8 @@ class LoginRequest extends FormRequest
         return [
             'email.required' => 'Email is required',
             'email.email' => 'Email is invalid',
-            'password.required' => 'Password is required',
-            'password.min' => 'Password must be at least 8 characters',
+            'password.required' => 'Auth is required',
+            'password.min' => 'Auth must be at least 8 characters',
         ];
     }
 }
