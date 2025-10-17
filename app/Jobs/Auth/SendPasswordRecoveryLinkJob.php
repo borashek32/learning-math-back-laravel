@@ -7,10 +7,8 @@ use App\Helpers\UniSender\UniSenderApiService;
 use App\Helpers\UniSender\UniSenderTemplates;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
-class SendEmailVerificationJob implements ShouldQueue
+class SendPasswordRecoveryLinkJob implements ShouldQueue
 {
     use Queueable;
 
@@ -19,6 +17,7 @@ class SendEmailVerificationJob implements ShouldQueue
      */
     public function __construct(
         public string $email,
+        public string $code,
     ) {}
 
     /**
@@ -26,15 +25,11 @@ class SendEmailVerificationJob implements ShouldQueue
      */
     public function handle(UnisenderApiService $service): void
     {
-        $hash = Hash::make($this->email . Str::random(40));
-
-        $link = config('app.frontend_url') . '/auth/verify-email?hash=' . urlencode($hash);
-
         $data = new EmailDataDto([
             'email' => $this->email,
-            'template_id' => UniSenderTemplates::SEND_EMAIL_VERIFICATION,
+            'template_id' => UniSenderTemplates::SEND_PASSWORD_RECOVERY_CODE,
             'data' => [
-                'link' => $link,
+                'code' => $this->code,
             ],
         ]);
 

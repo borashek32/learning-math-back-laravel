@@ -5,6 +5,7 @@ namespace Tests\Feature\app\Http\Controllers\Auth;
 use App\Models\User;
 use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class LoginControllerTest extends TestCase
@@ -22,7 +23,8 @@ class LoginControllerTest extends TestCase
         $this->user = User::query()->first();
     }
 
-    public function test_user_login_via_email_success()
+    #[Test]
+    public function user_login_via_email_success()
     {
         $response = $this->postJson('/api/v1/login', [
             'email' => $this->user->email,
@@ -38,7 +40,8 @@ class LoginControllerTest extends TestCase
         $this->assertArrayHasKey('token_type', $json['data']);
     }
 
-    public function test_user_login_via_email_failed()
+    #[Test]
+    public function user_login_via_email_failed()
     {
         $response = $this->postJson('/api/v1/login', [
             'email' => $this->user->email,
