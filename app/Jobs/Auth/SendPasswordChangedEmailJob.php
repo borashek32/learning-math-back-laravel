@@ -24,7 +24,7 @@ class SendPasswordChangedEmailJob implements ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(UnisenderApiService $service): void
+    public function handle(UniSenderApiService $service): void
     {
         $data = new EmailDataDto([
             'email' => $this->email,

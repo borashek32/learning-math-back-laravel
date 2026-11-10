@@ -2,7 +2,7 @@
 
 namespace App\Providers\Unisender;
 
-use App\Helpers\Unisender\UnisenderApiService;
+use App\Helpers\UniSender\UniSenderApiService;
 use Illuminate\Support\ServiceProvider;
 
 class UnisenderServiceProvider extends ServiceProvider
@@ -12,8 +12,8 @@ class UnisenderServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(UnisenderApiService::class, function() {
-            return UnisenderApiService::getInstance();
+        $this->app->singleton(UniSenderApiService::class, function () {
+            return UniSenderApiService::getInstance();
         });
     }
 

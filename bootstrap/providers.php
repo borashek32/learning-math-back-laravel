@@ -1,7 +1,9 @@
 <?php
 
+use App\Providers\AppServiceProvider;
+use App\Providers\Unisender\UnisenderServiceProvider;
+
 return [
-    App\Providers\AppServiceProvider::class,
-    App\Providers\Filament\AdminPanelProvider::class,
-    App\Providers\Unisender\UnisenderServiceProvider::class,
+    AppServiceProvider::class,
+    UnisenderServiceProvider::class,
 ];

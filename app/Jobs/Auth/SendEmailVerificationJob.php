@@ -24,11 +24,11 @@ class SendEmailVerificationJob implements ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(UnisenderApiService $service): void
+    public function handle(UniSenderApiService $service): void
     {
-        $hash = Hash::make($this->email . Str::random(40));
+        $hash = Hash::make($this->email.Str::random(40));
 
-        $link = config('app.frontend_url') . '/auth/verify-email?hash=' . urlencode($hash);
+        $link = config('app.frontend_url').'/auth/verify-email?hash='.urlencode($hash);
 
         $data = new EmailDataDto([
             'email' => $this->email,

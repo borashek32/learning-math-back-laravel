@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers\Unisender\Dto;
+namespace App\Helpers\UniSender\Dto;
 
 use App\Helpers\Dto\Dto;
 

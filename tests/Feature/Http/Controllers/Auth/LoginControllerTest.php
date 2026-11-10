@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\app\Http\Controllers\Auth;
+namespace Tests\Feature\Http\Controllers\Auth;
 
 use App\Models\User;
 use Database\Seeders\UserSeeder;
@@ -14,7 +14,7 @@ class LoginControllerTest extends TestCase
 
     private User $user;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

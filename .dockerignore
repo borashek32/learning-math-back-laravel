@@ -1,0 +1,10 @@
+.git
+.idea
+.env
+.phpunit.result.cache
+docker-compose.override.yml
+node_modules
+public/hot
+storage/logs
+tmp
+vendor
