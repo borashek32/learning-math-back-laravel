@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Events\Auth;
 
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -17,7 +19,5 @@ class PasswordChangedEvent
      */
     public function __construct(
         public string $email,
-    ) {
-        //
-    }
+    ) {}
 }

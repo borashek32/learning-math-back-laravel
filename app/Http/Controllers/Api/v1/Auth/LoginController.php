@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api\v1\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Auth\LoginRequest;
 use App\Http\Resources\v1\Auth\LoginResource;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\Response as StatusCode;
@@ -21,8 +24,10 @@ class LoginController extends Controller
      *
      *     @OA\RequestBody(
      *         required=true,
+     *
      *         @OA\JsonContent(
      *             required={"email", "password"},
+     *
      *             @OA\Property(property="email", type="string", format="email", example="user@example.com"),
      *             @OA\Property(property="password", type="string", format="password", example="secret123")
      *         )
@@ -31,8 +36,10 @@ class LoginController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Успешная авторизация",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="access_token", type="string", example="1|ZQWERTYUIOPASDFGHJKL"),
      *             @OA\Property(property="token_type", type="string", example="Bearer")
      *         )
@@ -41,8 +48,10 @@ class LoginController extends Controller
      *     @OA\Response(
      *         response=401,
      *         description="Неверный email или пароль",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="data", type="object",
      *                 @OA\Property(property="message", type="string", example="Invalid email or password")
      *             )
@@ -52,8 +61,10 @@ class LoginController extends Controller
      *     @OA\Response(
      *         response=500,
      *         description="Ошибка на сервере",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="data", type="object",
      *                 @OA\Property(property="message", type="string", example="Something went wrong")
      *             )
@@ -61,10 +72,9 @@ class LoginController extends Controller
      *     )
      * )
      */
-    public function login(LoginRequest $request)
+    public function login(LoginRequest $request): JsonResponse|LoginResource
     {
         if ($request->exists(['email', 'password'])) {
-
             $check = $this->viaEmail($request->email, $request->password);
 
             if (!$check) {
@@ -88,9 +98,9 @@ class LoginController extends Controller
     /**
      * Проверяет пользователя по email и паролю.
      *
-     * @return array|false
+     * @return array{access_token: string, token_type: string}|false
      */
-    private function viaEmail(string $username, string $password)
+    private function viaEmail(string $username, string $password): array|false
     {
         $user = User::query()->where('email', $username)->first();
 

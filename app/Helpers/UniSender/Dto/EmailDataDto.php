@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Helpers\UniSender\Dto;
 
 use App\Helpers\Dto\Dto;
@@ -12,5 +14,6 @@ class EmailDataDto extends Dto
 
     public string $template_id;
 
+    /** @var array<string, mixed> */
     public array $data = [];
 }

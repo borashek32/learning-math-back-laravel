@@ -16,12 +16,12 @@ final class OpenApiBuilderFactory implements CustomBuilderInterface
 {
     public function create(): Builder
     {
-        return (new Builder)
+        return (new Builder())
             ->setMode(Mode::CLASSIC)
-            ->withGenerator(static fn (): Generator => (new Generator)->setAnalyser(
+            ->withGenerator(static fn (): Generator => (new Generator())->setAnalyser(
                 new ReflectionAnalyser([
-                    new AttributeAnnotationFactory,
-                    new DocBlockAnnotationFactory,
+                    new AttributeAnnotationFactory(),
+                    new DocBlockAnnotationFactory(),
                 ]),
             ));
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs\Auth;
 
 use App\Helpers\UniSender\Dto\EmailDataDto;
@@ -17,9 +19,7 @@ class SendPasswordChangedEmailJob implements ShouldQueue
      */
     public function __construct(
         public string $email,
-    ) {
-        //
-    }
+    ) {}
 
     /**
      * Execute the job.

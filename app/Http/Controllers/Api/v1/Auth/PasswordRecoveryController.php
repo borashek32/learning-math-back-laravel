@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api\v1\Auth;
 
 use App\Http\Controllers\Controller;
@@ -17,7 +19,7 @@ class PasswordRecoveryController extends Controller
 {
     public function __construct(
         protected RecoveryHttpService $recoveryService,
-        protected ResetHttpService $resetService
+        protected ResetHttpService $resetService,
     ) {}
 
     /**
@@ -29,8 +31,10 @@ class PasswordRecoveryController extends Controller
      *
      *     @OA\RequestBody(
      *         required=true,
+     *
      *         @OA\JsonContent(
      *             required={"email"},
+     *
      *             @OA\Property(property="email", type="string", format="email", example="user@example.com")
      *         )
      *     ),
@@ -38,8 +42,10 @@ class PasswordRecoveryController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Код успешно отправлен",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="status", type="boolean", example=true),
      *             @OA\Property(property="data", type="object",
      *                 @OA\Property(property="message", type="string", example="Recovery code sent successfully.")
@@ -50,8 +56,10 @@ class PasswordRecoveryController extends Controller
      *     @OA\Response(
      *         response=404,
      *         description="Пользователь не найден",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="status", type="boolean", example=false),
      *             @OA\Property(property="data", type="object",
      *                 @OA\Property(property="message", type="string", example="User not found.")
@@ -62,8 +70,10 @@ class PasswordRecoveryController extends Controller
      *     @OA\Response(
      *         response=500,
      *         description="Ошибка сервера",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="data", type="object",
      *                 @OA\Property(property="message", type="string", example="Something went wrong")
      *             )
@@ -99,8 +109,10 @@ class PasswordRecoveryController extends Controller
      *
      *     @OA\RequestBody(
      *         required=true,
+     *
      *         @OA\JsonContent(
      *             required={"code", "password"},
+     *
      *             @OA\Property(property="code", type="string", example="123456"),
      *             @OA\Property(property="password", type="string", format="password", example="newStrongPassword123")
      *         )
@@ -109,8 +121,10 @@ class PasswordRecoveryController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Пароль успешно изменён",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="status", type="boolean", example=true),
      *             @OA\Property(property="data", type="object",
      *                 @OA\Property(property="message", type="string", example="Password successfully reset.")
@@ -121,8 +135,10 @@ class PasswordRecoveryController extends Controller
      *     @OA\Response(
      *         response=403,
      *         description="Неверный код восстановления или истёк срок действия",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="status", type="boolean", example=false),
      *             @OA\Property(property="data", type="object",
      *                 @OA\Property(property="message", type="string", example="Invalid or expired recovery code.")
@@ -131,7 +147,7 @@ class PasswordRecoveryController extends Controller
      *     )
      * )
      */
-    public function reset(PasswordResetRequest $request)
+    public function reset(PasswordResetRequest $request): JsonResponse
     {
         $dto = new ResetPasswordDto([
             'password' => $request->get('password'),

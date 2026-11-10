@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers\Unisender;
 
 use App\Helpers\UniSender\UniSenderApiService;
@@ -12,16 +14,11 @@ class UnisenderServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(UniSenderApiService::class, function () {
-            return UniSenderApiService::getInstance();
-        });
+        $this->app->singleton(UniSenderApiService::class, fn () => UniSenderApiService::getInstance());
     }
 
     /**
      * Bootstrap services.
      */
-    public function boot(): void
-    {
-        //
-    }
+    public function boot(): void {}
 }
