@@ -16,8 +16,8 @@ use OpenApi\Annotations as OA;
  * )
  *
  * @OA\Server(
- *     url="https://learning-math:7890",
- *     description="Local development server"
+ *     url="/",
+ *     description="Current server"
  * )
  *
  * @OA\Tag(
