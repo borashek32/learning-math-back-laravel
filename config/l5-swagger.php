@@ -134,6 +134,11 @@ return [
              */
             'analysis' => null,
 
+            /*
+             * Keep support for the existing @OA docblocks while allowing PHP attributes.
+             */
+            'builder_factory' => \App\Swagger\OpenApiBuilderFactory::class,
+
             /**
              * Custom query path processors classes.
              *
