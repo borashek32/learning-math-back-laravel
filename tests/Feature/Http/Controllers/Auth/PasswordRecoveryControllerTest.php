@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Http\Controllers\Auth;
 
 use App\Models\User;
@@ -12,10 +14,11 @@ use Tests\TestCase;
 
 class PasswordRecoveryControllerTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use RefreshDatabase;
+    use WithFaker;
 
     #[Test]
-    public function send_recovery_code_success(): void
+    public function sendRecoveryCodeSuccess(): void
     {
         $this->seed([
             UserSeeder::class,
@@ -31,7 +34,7 @@ class PasswordRecoveryControllerTest extends TestCase
     }
 
     #[Test]
-    public function send_recovery_code_with_invalid_email(): void
+    public function sendRecoveryCodeWithInvalidEmail(): void
     {
         $this->postJson('api/v1/password/recovery', [
             'email' => 'invalid-email',
@@ -39,14 +42,14 @@ class PasswordRecoveryControllerTest extends TestCase
     }
 
     #[Test]
-    public function reset_password_success()
+    public function resetPasswordSuccess(): void
     {
         $this->seed([
             UserSeeder::class,
         ]);
 
         $user = User::query()->first();
-        $code = $this->faker->randomNumber(6);
+        $code = (string) $this->faker->randomNumber(6);
 
         DB::table('password_resets')->insert([
             'email' => $user->email,
@@ -62,14 +65,14 @@ class PasswordRecoveryControllerTest extends TestCase
     }
 
     #[Test]
-    public function reset_password_fail()
+    public function resetPasswordFail(): void
     {
         $this->seed([
             UserSeeder::class,
         ]);
 
         $user = User::query()->first();
-        $code = $this->faker->randomNumber(6);
+        $code = (string) $this->faker->randomNumber(6);
 
         DB::table('password_resets')->insert([
             'email' => $user->email,
@@ -85,14 +88,14 @@ class PasswordRecoveryControllerTest extends TestCase
     }
 
     #[Test]
-    public function reset_password_validate_error(): void
+    public function resetPasswordValidateError(): void
     {
         $this->seed([
             UserSeeder::class,
         ]);
 
         $user = User::query()->first();
-        $code = $this->faker->randomNumber(6);
+        $code = (string) $this->faker->randomNumber(6);
 
         DB::table('password_resets')->insert([
             'email' => $user->email,

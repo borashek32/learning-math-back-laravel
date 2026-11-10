@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Http\Controllers\Auth;
 
 use App\Models\User;
@@ -13,7 +15,7 @@ class LogoutControllerTest extends TestCase
     use RefreshDatabase;
 
     #[Test]
-    public function logout()
+    public function logout(): void
     {
         $this->seed(UserSeeder::class);
 
@@ -29,7 +31,7 @@ class LogoutControllerTest extends TestCase
     }
 
     #[Test]
-    public function logout_from_all_devices()
+    public function logoutFromAllDevices(): void
     {
         $this->seed(UserSeeder::class);
 

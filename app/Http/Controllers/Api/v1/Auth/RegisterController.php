@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api\v1\Auth;
 
 use App\Events\Auth\NewUserRegisteredEvent;
@@ -26,8 +28,10 @@ class RegisterController extends Controller
      *
      *     @OA\RequestBody(
      *         required=true,
+     *
      *         @OA\JsonContent(
      *             required={"email", "password", "password_confirmation"},
+     *
      *             @OA\Property(property="email", type="string", format="email", example="user@example.com"),
      *             @OA\Property(property="password", type="string", format="password", example="secret123"),
      *             @OA\Property(property="password_confirmation", type="string", format="password", example="secret123")
@@ -37,8 +41,10 @@ class RegisterController extends Controller
      *     @OA\Response(
      *         response=201,
      *         description="Пользователь успешно зарегистрирован",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="user", type="object",
      *                 @OA\Property(property="id", type="integer", example=1),
      *                 @OA\Property(property="email", type="string", example="user@example.com")
@@ -51,8 +57,10 @@ class RegisterController extends Controller
      *     @OA\Response(
      *         response=422,
      *         description="Ошибка валидации (например, не совпадают пароли)",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="message", type="string", example="The email has already been taken.")
      *         )
      *     ),
@@ -60,8 +68,10 @@ class RegisterController extends Controller
      *     @OA\Response(
      *         response=500,
      *         description="Ошибка на сервере",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="message", type="string", example="Something went wrong")
      *         )
      *     )
@@ -94,6 +104,9 @@ class RegisterController extends Controller
             ->setStatusCode(StatusCode::HTTP_CREATED);
     }
 
+    /**
+     * @return array{user: User, access_token: string, token_type: string, email: string}
+     */
     private function viaEmail(string $email, string $password): array
     {
         $user = User::query()->create([

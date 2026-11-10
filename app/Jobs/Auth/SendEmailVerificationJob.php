@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs\Auth;
 
 use App\Helpers\UniSender\Dto\EmailDataDto;
@@ -26,9 +28,9 @@ class SendEmailVerificationJob implements ShouldQueue
      */
     public function handle(UniSenderApiService $service): void
     {
-        $hash = Hash::make($this->email.Str::random(40));
+        $hash = Hash::make($this->email . Str::random(40));
 
-        $link = config('app.frontend_url').'/auth/verify-email?hash='.urlencode($hash);
+        $link = config('app.frontend_url') . '/auth/verify-email?hash=' . urlencode($hash);
 
         $data = new EmailDataDto([
             'email' => $this->email,

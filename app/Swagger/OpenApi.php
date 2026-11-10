@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Swagger;
 
 use OpenApi\Annotations as OA;
@@ -9,6 +11,7 @@ use OpenApi\Annotations as OA;
  *     title="Learning Math API",
  *     version="1.0.0",
  *     description="Документация для Learning Math API (Laravel + Swagger)",
+ *
  *     @OA\Contact(
  *         email="support@learning-math.com",
  *         name="API Support"
@@ -16,8 +19,8 @@ use OpenApi\Annotations as OA;
  * )
  *
  * @OA\Server(
- *     url="https://learning-math:7890",
- *     description="Local development server"
+ *     url="/",
+ *     description="Current server"
  * )
  *
  * @OA\Tag(
