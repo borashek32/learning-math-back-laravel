@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Auth\Http;
 
 use App\Events\Auth\PasswordRecoveryRequestedEvent;
@@ -10,9 +12,11 @@ use Illuminate\Support\Str;
 
 class RecoveryHttpService
 {
+    /**
+     * @return array{status: bool, message: string}
+     */
     public function viaEmail(RecoveryPasswordDto $dto): array
     {
-
         $user = User::query()->where('email', '=', $dto->email)->first();
 
         if (!$user) {
@@ -37,6 +41,5 @@ class RecoveryHttpService
             'status' => true,
             'message' => 'Auth recovery link sent successfully.',
         ];
-
     }
 }

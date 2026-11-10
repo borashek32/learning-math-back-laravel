@@ -7,6 +7,26 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## Code quality
+
+The project uses PHP CS Fixer for automatic formatting and Larastan (PHPStan
+for Laravel) for static analysis.
+
+```bash
+composer cs:fix
+composer cs:check
+composer analyse
+composer test
+composer quality
+```
+
+The tools can also be invoked directly with PHP 8.4:
+
+```bash
+/Applications/MAMP/bin/php/php8.4.15/bin/php vendor/bin/php-cs-fixer fix
+/Applications/MAMP/bin/php/php8.4.15/bin/php vendor/bin/phpstan analyse --no-progress --debug
+```
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:

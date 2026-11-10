@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Traits\HttpResponses;
+
+use Illuminate\Http\JsonResponse;
 
 trait HttpResponses
 {
-    protected function success($data, $message = null, $code = 200): \Illuminate\Http\JsonResponse
+    protected function success(mixed $data, ?string $message = null, int $code = 200): JsonResponse
     {
         return response()->json([
             'status' => 'Request was successful',
@@ -13,7 +17,7 @@ trait HttpResponses
         ], $code);
     }
 
-    protected function error($data, $message, $code): \Illuminate\Http\JsonResponse
+    protected function error(mixed $data, string $message, int $code): JsonResponse
     {
         return response()->json([
             'status' => 'Error occurred',

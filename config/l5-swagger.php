@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'default' => 'default',
     'documentations' => [
@@ -102,32 +104,32 @@ return [
         ],
 
         'scanOptions' => [
-            /**
+            /*
              * Configuration for default processors. Allows to pass processors configuration to swagger-php.
              *
              * @link https://zircote.github.io/swagger-php/reference/processors.html
              */
             'default_processors_configuration' => [
-            /** Example */
-            /**
-             * 'operationId.hash' => true,
-             * 'pathFilter' => [
-             * 'tags' => [
-             * '/pets/',
-             * '/store/',
-             * ],
-             * ],.
-             */
+                /* Example */
+                /*
+                 * 'operationId.hash' => true,
+                 * 'pathFilter' => [
+                 * 'tags' => [
+                 * '/pets/',
+                 * '/store/',
+                 * ],
+                 * ],.
+                 */
             ],
 
-            /**
+            /*
              * analyser: defaults to \OpenApi\StaticAnalyser .
              *
              * @see \OpenApi\scan
              */
             'analyser' => null,
 
-            /**
+            /*
              * analysis: defaults to a new \OpenApi\Analysis .
              *
              * @see \OpenApi\scan
@@ -137,9 +139,9 @@ return [
             /*
              * Keep support for the existing @OA docblocks while allowing PHP attributes.
              */
-            'builder_factory' => \App\Swagger\OpenApiBuilderFactory::class,
+            'builder_factory' => App\Swagger\OpenApiBuilderFactory::class,
 
-            /**
+            /*
              * Custom query path processors classes.
              *
              * @link https://github.com/zircote/swagger-php/tree/master/Examples/processors/schema-query-parameter
@@ -149,7 +151,7 @@ return [
                 // new \App\SwaggerProcessors\SchemaQueryParameter(),
             ],
 
-            /**
+            /*
              * pattern: string       $pattern File pattern(s) to scan (default: *.php) .
              *
              * @see \OpenApi\scan
@@ -167,7 +169,7 @@ return [
              * Allows to generate specs either for OpenAPI 3.0.0 or OpenAPI 3.1.0.
              * By default the spec will be in version 3.0.0
              */
-            'open_api_spec_version' => env('L5_SWAGGER_OPEN_API_SPEC_VERSION', \L5Swagger\Generator::OPEN_API_DEFAULT_SPEC_VERSION),
+            'open_api_spec_version' => env('L5_SWAGGER_OPEN_API_SPEC_VERSION', L5Swagger\Generator::OPEN_API_DEFAULT_SPEC_VERSION),
         ],
 
         /*
@@ -288,7 +290,7 @@ return [
                  */
                 'doc_expansion' => env('L5_SWAGGER_UI_DOC_EXPANSION', 'none'),
 
-                /**
+                /*
                  * If set, enables filtering. The top bar will show an edit box that
                  * you can use to filter the tagged operations that are shown. Can be
                  * Boolean to enable or disable, or a string, in which case filtering

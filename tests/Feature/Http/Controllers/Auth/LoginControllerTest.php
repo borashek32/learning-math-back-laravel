@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Http\Controllers\Auth;
 
 use App\Models\User;
@@ -24,7 +26,7 @@ class LoginControllerTest extends TestCase
     }
 
     #[Test]
-    public function user_login_via_email_success()
+    public function userLoginViaEmailSuccess(): void
     {
         $response = $this->postJson('/api/v1/login', [
             'email' => $this->user->email,
@@ -41,7 +43,7 @@ class LoginControllerTest extends TestCase
     }
 
     #[Test]
-    public function user_login_via_email_failed()
+    public function userLoginViaEmailFailed(): void
     {
         $response = $this->postJson('/api/v1/login', [
             'email' => $this->user->email,

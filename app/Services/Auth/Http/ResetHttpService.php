@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Auth\Http;
 
 use App\Events\Auth\PasswordChangedEvent;
@@ -11,15 +13,25 @@ use Illuminate\Support\Facades\Hash;
 
 class ResetHttpService
 {
+    /**
+     * @return array{status: bool, message: string}
+     */
     public function reset(ResetPasswordDto $dto): array
     {
         $code = DB::table('password_resets')
             ->where('code', '=', $dto->code)
             ->first();
 
-        $time = Carbon::create($code->expired_at);
+        if ($code === null) {
+            return [
+                'status' => false,
+                'message' => 'Code not found',
+            ];
+        }
 
-        if (empty($code) || ($time->diffInMinutes(now()) > 1)) {
+        $expiresAt = Carbon::parse($code->expired_at);
+
+        if ($expiresAt->isPast()) {
             return [
                 'status' => false,
                 'message' => 'Code expired',

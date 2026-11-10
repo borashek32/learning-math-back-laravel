@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api\v1\Auth;
 
 use App\Http\Controllers\Controller;
@@ -23,8 +25,10 @@ class LogoutController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Успешный выход",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="data", type="object",
      *                 @OA\Property(property="message", type="string", example="Logged out successfully")
      *             )
@@ -34,8 +38,10 @@ class LogoutController extends Controller
      *     @OA\Response(
      *         response=401,
      *         description="Неавторизован (токен отсутствует или неверен)",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="message", type="string", example="Unauthenticated.")
      *         )
      *     )
@@ -63,8 +69,10 @@ class LogoutController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Успешный выход со всех устройств",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="data", type="object",
      *                 @OA\Property(property="message", type="string", example="Logged out successfully")
      *             )
@@ -74,8 +82,10 @@ class LogoutController extends Controller
      *     @OA\Response(
      *         response=401,
      *         description="Неавторизован (токен отсутствует или неверен)",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="message", type="string", example="Unauthenticated.")
      *         )
      *     )

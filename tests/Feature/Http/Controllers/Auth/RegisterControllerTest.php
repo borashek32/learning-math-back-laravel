@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Http\Controllers\Auth;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -11,7 +13,7 @@ class RegisterControllerTest extends TestCase
     use RefreshDatabase;
 
     #[Test]
-    public function register_via_email_success()
+    public function registerViaEmailSuccess(): void
     {
         $this->postJson('api/v1/register', [
             'email' => 'john@doe.com',
@@ -28,7 +30,7 @@ class RegisterControllerTest extends TestCase
     }
 
     #[Test]
-    public function register_via_email_failed()
+    public function registerViaEmailFailed(): void
     {
         $response = $this->postJson('api/v1/register', [
             'email' => 'johndoe.com',
