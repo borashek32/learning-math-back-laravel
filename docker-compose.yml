@@ -48,6 +48,17 @@ services:
       timeout: 5s
       retries: 20
 
+  adminer:
+    image: adminer:5
+    restart: always
+    environment:
+      ADMINER_DEFAULT_SERVER: api_db
+    ports:
+      - "127.0.0.1:8086:8080"
+    depends_on:
+      api_db:
+        condition: service_healthy
+
 volumes:
   api_database:
   node_modules:

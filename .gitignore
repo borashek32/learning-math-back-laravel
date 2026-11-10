@@ -20,5 +20,7 @@ yarn-error.log
 /tmp
 database/.DS_Store
 /.DS_Store
+_docker/.DS_Store
+/tmp
 
 
